@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les entretiens Langlois inc. — Excavation, terrassement, pavé uni | Saint-Mathieu-du-Parc, Mauricie</title>
+<meta name="description" content="Excavation, terrassement, pavé uni, fosses septiques et chemins forestiers à Saint-Mathieu-du-Parc et dans la région de la Mauricie. On connaît votre terrain, jusqu'au roc.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241A12;
+    --topsoil:#3B2A1C;
+    --clay:#B85A2E;
+    --clay-deep:#8F441F;
+    --moss:#45532F;
+    --moss-deep:#313D22;
+    --gravel-band:#C9B487;
+    --bg:#EFE8D8;
+    --surface:#FAF6EC;
+    --stone:#DED0AE;
+    --line:#DBCBA4;
+    --text-soft:#6B6350;
+    --shadow:0 20px 46px -26px rgba(36,26,18,.4);
+    --shadow-sm:0 10px 26px -16px rgba(36,26,18,.32);
+    --radius:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Work Sans',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Zilla Slab',serif;line-height:1.06;letter-spacing:-.01em}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:min(1160px,92vw);margin-inline:auto}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--clay-deep);display:inline-flex;align-items:center;gap:.6rem;
+  }
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--clay)}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(239,232,216,.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+  .brand{display:flex;align-items:center;gap:.7rem;font-family:'Zilla Slab';font-weight:700;font-size:1.28rem;letter-spacing:-.01em;color:var(--ink)}
+  .brand small{display:block;font-family:'IBM Plex Mono';font-size:.6rem;font-weight:600;letter-spacing:.14em;color:var(--clay-deep);text-transform:uppercase;margin-top:1px}
+  .brand .mark{width:36px;height:36px;flex:none}
+  .nav-links{display:flex;gap:2.1rem;font-weight:600;font-size:.92rem;color:var(--ink)}
+  .nav-links a{position:relative;padding:.2rem 0}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-3px;width:0;height:2px;background:var(--clay);transition:width .25s ease}
+  .nav-links a:hover::after,.nav-links a:focus-visible::after{width:100%}
+  .btn{
+    display:inline-flex;align-items:center;gap:.55rem;font-family:'Work Sans';font-weight:700;
+    font-size:.92rem;padding:.72rem 1.35rem;border-radius:var(--radius);cursor:pointer;border:1.5px solid transparent;
+    transition:transform .18s ease,box-shadow .18s ease,background .2s ease,border-color .2s ease;
+  }
+  .btn-primary{background:var(--clay);color:#FAF6EC;box-shadow:0 10px 22px -10px rgba(184,90,46,.55)}
+  .btn-primary:hover{transform:translateY(-2px);background:var(--clay-deep)}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--stone)}
+  .btn-ghost:hover{border-color:var(--clay)}
+  :focus-visible{outline:3px solid var(--moss);outline-offset:3px}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;padding:clamp(2.8rem,6vw,5.5rem) 0 clamp(3rem,5vw,4.5rem)}
+  .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(2rem,4vw,4rem);align-items:center}
+  .hero h1{font-size:clamp(2.3rem,4.8vw,3.8rem);font-weight:700;color:var(--ink);margin:1.05rem 0 1.25rem}
+  .hero h1 em{font-style:normal;color:var(--clay-deep)}
+  .hero p.lead{font-size:clamp(1.02rem,1.4vw,1.16rem);color:var(--text-soft);max-width:38ch;margin-bottom:1.9rem}
+  .hero-cta{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.2rem}
+  .trust{display:flex;gap:1.5rem;flex-wrap:wrap;font-size:.86rem;font-weight:600;color:var(--topsoil)}
+  .trust span{display:inline-flex;align-items:center;gap:.45rem}
+  .trust svg{width:16px;height:16px;color:var(--clay)}
+
+  /* Signature : coupe de terrain */
+  .strata-stage{position:relative;aspect-ratio:.82/1;max-width:400px;margin-inline:auto}
+  .strata-frame{position:relative;width:100%;height:100%;border-radius:6px;overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(36,26,18,.12)}
+  .strata-frame svg{display:block;width:100%;height:100%}
+  .depth-tag{position:absolute;font-family:'IBM Plex Mono';font-size:.62rem;font-weight:600;color:#FAF6EC;opacity:.85;letter-spacing:.02em}
+
+  @keyframes bucketDrop{
+    0%{transform:translateY(-46px) rotate(-6deg);opacity:0}
+    55%{transform:translateY(4px) rotate(2deg);opacity:1}
+    75%{transform:translateY(-3px) rotate(-1deg)}
+    100%{transform:translateY(0) rotate(0deg)}
+  }
+  @keyframes cutSweep{
+    0%{stroke-dashoffset:340;opacity:0}
+    10%{opacity:.9}
+    100%{stroke-dashoffset:0;opacity:.9}
+  }
+  @keyframes clodFall{
+    0%{transform:translate(0,0) rotate(0deg);opacity:0}
+    15%{opacity:1}
+    100%{transform:translate(var(--dx,10px),var(--dy,60px)) rotate(140deg);opacity:0}
+  }
+  @keyframes motePulse{
+    0%,100%{opacity:.15}
+    50%{opacity:.5}
+  }
+  .bucket-grp{animation:bucketDrop 1.1s cubic-bezier(.2,.8,.3,1) .15s both}
+  .cut-line{stroke-dasharray:340;animation:cutSweep 1.3s ease-out .1s both}
+  .clod{animation:clodFall 1.4s ease-in .9s both}
+  .mote{animation:motePulse 4s ease-in-out infinite}
+
+  @media(prefers-reduced-motion:reduce){
+    .bucket-grp,.cut-line,.clod,.mote{animation:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important}
+  }
+
+  /* Réalisations — mosaïque photo + vidéo */
+  .media-sec{background:var(--surface);border-block:1px solid var(--line)}
+  .media-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:170px;gap:.9rem;
+    grid-auto-flow:dense;
+  }
+  .media-item{
+    position:relative;border-radius:6px;overflow:hidden;box-shadow:var(--shadow-sm);
+    border:1px solid var(--line);background:var(--ink);
+  }
+  .media-item.tall{grid-row:span 2}
+  .media-item.wide{grid-column:span 2}
+  .media-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+  .media-item:hover img{transform:scale(1.06)}
+  .media-item iframe{width:100%;height:100%;border:none;display:block}
+  .media-caption{
+    position:absolute;left:0;right:0;bottom:0;padding:.7rem .85rem;
+    background:linear-gradient(0deg,rgba(36,26,18,.9),rgba(36,26,18,0));
+    color:#FAF6EC;font-family:'IBM Plex Mono';font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    pointer-events:none;
+  }
+  .video-caption{pointer-events:auto;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none}
+  .video-caption:hover{text-decoration:underline}
+
+  /* ---------- Sections ---------- */
+  section{padding:clamp(3.4rem,6vw,5.8rem) 0}
+  .sec-head{max-width:58ch;margin-bottom:2.8rem}
+  .sec-head h2{font-size:clamp(1.85rem,3.2vw,2.5rem);font-weight:700;color:var(--ink);margin:.85rem 0 .75rem}
+  .sec-head p{color:var(--text-soft);font-size:1.02rem}
+
+  /* Services */
+  .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.6rem 1.3rem;
+    box-shadow:var(--shadow-sm);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  }
+  .card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--clay)}
+  .card .ic{width:44px;height:44px;border-radius:var(--radius);display:grid;place-items:center;background:var(--bg);color:var(--clay-deep);margin-bottom:1rem;border:1px solid var(--line)}
+  .card .ic svg{width:22px;height:22px}
+  .card h3{font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:.5rem}
+  .card p{font-size:.88rem;color:var(--text-soft)}
+
+  /* Pourquoi / expertise terrain */
+  .why{background:var(--surface);border-block:1px solid var(--line)}
+  .why-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,4vw,3.5rem);align-items:start}
+  .why-list{display:flex;flex-direction:column;gap:1.5rem;margin-top:1.4rem}
+  .why-item{display:flex;gap:1rem;align-items:flex-start}
+  .why-item .ic{flex:none;width:38px;height:38px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;color:var(--moss-deep)}
+  .why-item .ic svg{width:19px;height:19px}
+  .why-item h3{font-size:1.04rem;color:var(--ink);margin-bottom:.3rem}
+  .why-item p{font-size:.92rem;color:var(--text-soft)}
+  .why-panel{background:var(--ink);color:#EFE8D8;border-radius:6px;padding:2rem 1.8rem;position:relative;overflow:hidden}
+  .why-panel::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(184,90,46,.09) 0 2px,transparent 2px 14px)}
+  .why-panel .mono{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);opacity:.9;position:relative}
+  .why-panel h3{font-size:1.4rem;color:#FAF6EC;margin:.7rem 0 .9rem;position:relative}
+  .why-panel p{font-size:.92rem;color:#D8CBB2;position:relative}
+
+  /* Processus - ligne de chantier */
+  .timeline{position:relative;padding-top:1.2rem}
+  .timeline::before{content:"";position:absolute;top:2.55rem;left:0;right:0;height:2px;background:var(--stone)}
+  .tsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;position:relative}
+  .tstep{padding-top:2.6rem;position:relative}
+  .tstep::before{
+    content:"";position:absolute;top:1.95rem;left:0;width:14px;height:14px;border-radius:50%;
+    background:var(--clay);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--clay);
+  }
+  .tstep .mono{font-size:.68rem;color:var(--clay-deep);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:.4rem}
+  .tstep h3{font-size:1.02rem;color:var(--ink);margin-bottom:.4rem;font-weight:600;font-family:'Work Sans'}
+  .tstep p{font-size:.88rem;color:var(--text-soft)}
+
+  /* Zone */
+  .zone{background:var(--moss-deep);color:#EAE6D6}
+  .zone .wrap{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center}
+  .zone h2{color:#FAF6EC;font-size:clamp(1.75rem,3vw,2.4rem);margin-bottom:1rem}
+  .zone .eyebrow{color:#C9B487}
+  .zone .eyebrow::before{background:#C9B487}
+  .zone p{color:#CFC7AC;font-size:1.02rem}
+  .tags{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.1rem}
+  .tags span{border:1px solid rgba(201,180,135,.4);border-radius:3px;padding:.5rem 1.05rem;font-weight:600;font-size:.86rem;color:#EAE6D6;font-family:'IBM Plex Mono'}
+
+  /* Soumission */
+  .quote-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,4vw,4rem);align-items:start}
+  .quote-copy h2{font-size:clamp(1.85rem,3vw,2.4rem);color:var(--ink);margin:.85rem 0 1rem}
+  .quote-copy p{color:var(--text-soft);margin-bottom:1.3rem}
+  .quote-copy .assur{display:flex;align-items:center;gap:.65rem;font-weight:600;color:var(--topsoil);margin-bottom:.65rem;font-size:.92rem}
+  .quote-copy .assur svg{width:18px;height:18px;color:var(--clay);flex:none}
+  form{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.8rem;box-shadow:var(--shadow-sm)}
+  .field{margin-bottom:1.02rem}
+  .field label{display:block;font-weight:600;font-size:.86rem;margin-bottom:.4rem;color:var(--ink)}
+  .field input,.field select,.field textarea{
+    width:100%;padding:.78rem .92rem;border:1.5px solid var(--stone);border-radius:3px;
+    font-family:inherit;font-size:.96rem;color:var(--ink);background:#FDFBF5;transition:border-color .18s ease,box-shadow .18s ease;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--clay);box-shadow:0 0 0 3px rgba(184,90,46,.14)}
+  .field textarea{resize:vertical;min-height:86px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  form .btn-primary{width:100%;justify-content:center;padding:.88rem;font-size:.98rem;margin-top:.2rem}
+  .form-note{font-size:.78rem;color:var(--text-soft);text-align:center;margin-top:.8rem}
+  .confirm{display:none;background:var(--bg);border:1px solid var(--clay);color:var(--clay-deep);border-radius:3px;padding:1rem;font-weight:600;text-align:center;margin-top:1rem;font-size:.92rem}
+
+  /* Footer */
+  footer{background:var(--ink);color:#B8AB8C;padding:3.4rem 0 2rem}
+  .foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2rem;padding-bottom:2.1rem;border-bottom:1px solid rgba(250,246,236,.1)}
+  .foot-top .brand{color:#FAF6EC}
+  .foot-col h4{font-family:'IBM Plex Mono';color:#DCCFA6;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.9rem}
+  .foot-col a,.foot-col p{display:block;color:#B8AB8C;font-size:.92rem;margin-bottom:.5rem;transition:color .18s ease}
+  .foot-col a:hover{color:var(--clay)}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding-top:1.5rem;font-size:.82rem;color:#7C7259}
+  .foot-bottom .credit b{color:#C9B487;font-weight:700}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:960px){
+    .nav-links{display:none}
+    .hero-grid{grid-template-columns:1fr}
+    .strata-stage{order:-1;max-width:300px}
+    .cards{grid-template-columns:repeat(3,1fr)}
+    .media-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:150px}
+    .why-grid{grid-template-columns:1fr}
+    .tsteps{grid-template-columns:1fr 1fr}
+    .timeline::before{display:none}
+    .tstep::before{display:none}
+    .tstep{padding-top:0}
+    .zone .wrap{grid-template-columns:1fr}
+    .quote-grid{grid-template-columns:1fr}
+    .foot-top{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:560px){
+    .cards{grid-template-columns:1fr 1fr}
+    .media-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px}
+    .media-item.wide{grid-column:span 2}
+    .media-item.tall{grid-row:span 2}
+    .tsteps,.row2,.foot-top{grid-template-columns:1fr}
+    .hero-cta{flex-direction:column}
+    .hero-cta .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="3" y="3" width="34" height="34" rx="3" stroke="#241A12" stroke-width="1.6"/>
+        <path d="M8 24h24" stroke="#B85A2E" stroke-width="2" stroke-linecap="round"/>
+        <path d="M8 29h24" stroke="#45532F" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 24V13l6-5 6 5v11" stroke="#241A12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <span>Les entretiens Langlois<small>Excavation &amp; terrassement — Mauricie</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="#services">Services</a>
+      <a href="#realisations">Réalisations</a>
+      <a href="#expertise">Expertise</a>
+      <a href="#zone">Zone desservie</a>
+      <a href="#soumission">Soumission</a>
+    </nav>
+    <a href="#soumission" class="btn btn-primary">Demander une soumission</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Saint-Mathieu-du-Parc · Mauricie</span>
+      <h1>On connaît votre terrain,<br>jusqu'<em>au roc</em>.</h1>
+      <p class="lead">Excavation, terrassement, pavé uni, fosses septiques et chemins forestiers. Un travail de terrain qui exige de bien connaître ce qu'il y a sous la surface.</p>
+      <div class="hero-cta">
+        <a href="#soumission" class="btn btn-primary">Demander une soumission</a>
+        <a href="#services" class="btn btn-ghost">Voir les services</a>
+      </div>
+      <div class="trust">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Saint-Mathieu-du-Parc &amp; Mauricie</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Équipement lourd sur place</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Travaux résidentiels &amp; forestiers</span>
+      </div>
+    </div>
+
+    <div class="strata-stage" aria-hidden="true">
+      <div class="strata-frame">
+        <svg viewBox="0 0 320 390" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="gravelDots" width="14" height="14" patternUnits="userSpaceOnUse">
+              <circle cx="3" cy="3" r="1.4" fill="#A8895A" opacity=".55"/>
+              <circle cx="10" cy="9" r="1.1" fill="#8F723F" opacity=".5"/>
+            </pattern>
+            <pattern id="rockHatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="12" height="12" fill="#241A12"/>
+              <line x1="0" y1="0" x2="0" y2="12" stroke="#3A2A1B" stroke-width="2"/>
+            </pattern>
+          </defs>
+
+          <!-- bandes de sol -->
+          <rect x="0" y="0" width="320" height="390" fill="#3B2A1C"/>
+          <rect x="0" y="58" width="320" height="332" fill="#B85A2E"/>
+          <rect x="0" y="170" width="320" height="220" fill="#C9B487"/>
+          <rect x="0" y="170" width="320" height="220" fill="url(#gravelDots)"/>
+          <rect x="0" y="266" width="320" height="124" fill="url(#rockHatch)"/>
+
+          <!-- règle de profondeur -->
+          <g class="mono" font-family="IBM Plex Mono" font-size="11" fill="#FAF6EC">
+            <line x1="0" y1="58" x2="14" y2="58" stroke="#FAF6EC" stroke-width="1.4" opacity=".7"/>
+            <line x1="0" y1="170" x2="14" y2="170" stroke="#FAF6EC" stroke-width="1.4" opacity=".7"/>
+            <line x1="0" y1="266" x2="14" y2="266" stroke="#FAF6EC" stroke-width="1.4" opacity=".7"/>
+            <text x="19" y="16" opacity=".85">0,0 m</text>
+            <text x="19" y="72" opacity=".85">0,6 m</text>
+            <text x="19" y="184" opacity=".85">1,8 m</text>
+            <text x="19" y="280" opacity=".85">2,7 m</text>
+          </g>
+
+          <!-- ligne de coupe -->
+          <path class="cut-line" d="M170 0 L170 260" stroke="#FAF6EC" stroke-width="1.4" stroke-dasharray="5 5" opacity=".8"/>
+
+          <!-- godet d'excavatrice -->
+          <g class="bucket-grp">
+            <path d="M148 4 L214 4 L226 40 L206 66 L156 66 L136 40 Z" fill="#241A12" stroke="#FAF6EC" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M156 66 L162 78 M172 66 L178 80 M188 66 L194 79 M200 66 L206 76" stroke="#FAF6EC" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- motte de terre -->
+          <ellipse class="clod" style="--dx:-26px;--dy:44px" cx="120" cy="50" rx="6" ry="5" fill="#8F441F"/>
+          <ellipse class="clod" style="--dx:30px;--dy:36px;animation-delay:1.05s" cx="230" cy="46" rx="5" ry="4.5" fill="#3B2A1C"/>
+
+          <!-- conduite enfouie (fosse septique) -->
+          <circle cx="90" cy="220" r="9" fill="none" stroke="#FAF6EC" stroke-width="2" opacity=".55"/>
+          <circle class="mote" cx="90" cy="220" r="2.4" fill="#FAF6EC" opacity=".7"/>
+
+          <!-- particules ambiantes -->
+          <circle class="mote" cx="250" cy="90" r="1.6" fill="#FAF6EC" style="animation-delay:.4s"/>
+          <circle class="mote" cx="270" cy="130" r="1.3" fill="#FAF6EC" style="animation-delay:1.6s"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RÉALISATIONS ============ -->
+<section id="realisations" class="media-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Sur le terrain</span>
+      <h2>Des chantiers, pas des promesses</h2>
+      <p>Un aperçu de nos travaux — résidentiel, commercial et villégiature — et une capsule vidéo directement depuis notre page Facebook.</p>
+    </div>
+    <div class="media-grid">
+      <div class="media-item video-item tall">
+        <iframe
+          src="https://www.facebook.com/plugins/video.php?height=650&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1381227986184094&amp;show_text=false&amp;width=366&amp;t=0"
+          scrolling="no" frameborder="0" allowfullscreen="true"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          title="Vidéo Les entretiens Langlois sur Facebook" loading="lazy">
+        </iframe>
+        <a class="media-caption video-caption" href="https://www.facebook.com/reel/1381227986184094" target="_blank" rel="noopener">
+          Voir sur Facebook
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M7 17 17 7M7 7h10v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <figure class="media-item wide">
+        <img src="img/excavation-mur-soutenement.jpg" alt="Excavation et construction d'un mur de soutènement en forêt" loading="lazy">
+        <figcaption class="media-caption">Excavation &amp; mur de soutènement</figcaption>
+      </figure>
+      <figure class="media-item tall">
+        <img src="img/escalier-pave-uni.jpg" alt="Escalier et patio en pavé uni menant à une résidence" loading="lazy">
+        <figcaption class="media-caption">Escalier en pavé uni</figcaption>
+      </figure>
+      <figure class="media-item">
+        <img src="img/pave-uni-commercial.jpg" alt="Aire de feu en pavé uni pour un espace commercial" loading="lazy">
+        <figcaption class="media-caption">Pavé uni — aire de feu</figcaption>
+      </figure>
+      <figure class="media-item">
+        <img src="img/amenagement-piscine.jpg" alt="Excavation et dalles autour d'une piscine en construction" loading="lazy">
+        <figcaption class="media-caption">Aménagement piscine</figcaption>
+      </figure>
+      <figure class="media-item tall">
+        <img src="img/terrassement-fondation.jpg" alt="Terrassement autour d'une fondation résidentielle" loading="lazy">
+        <figcaption class="media-caption">Terrassement résidentiel</figcaption>
+      </figure>
+      <figure class="media-item">
+        <img src="img/terrassement-pave-riverain.jpg" alt="Terrassement et pavé uni pour une propriété riveraine" loading="lazy">
+        <figcaption class="media-caption">Terrassement &amp; pavé uni</figcaption>
+      </figure>
+      <figure class="media-item">
+        <img src="img/enrochement-residence.jpg" alt="Enrochement et terrassement devant une résidence en construction" loading="lazy">
+        <figcaption class="media-caption">Enrochement</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Nos services</span>
+      <h2>Cinq métiers, un seul terrain à maîtriser</h2>
+      <p>De la fondation au chemin d'accès, chaque projet commence par bien comprendre ce qu'il y a sous vos pieds.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/><rect x="15" y="9" width="6" height="6"/><rect x="6" y="15" width="6" height="6"/><rect x="12" y="15" width="6" height="6"/></svg></div>
+        <h3>Pavé uni</h3>
+        <p>Entrées, terrasses et allées. Pose durable, base bien compactée pour résister aux cycles de gel.</p>
+      </article>
+      <article class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h18M6 17l3-8h6l3 8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 9V5m6 4V5" stroke-linecap="round"/></svg></div>
+        <h3>Terrassement</h3>
+        <p>Nivellement de terrain, drainage et préparation de sol pour vos projets de construction.</p>
+      </article>
+      <article class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21 12 3l8 18" stroke-linejoin="round"/><path d="M8 21v-6h8v6" stroke-linejoin="round"/></svg></div>
+        <h3>Excavation</h3>
+        <p>Fondations, tranchées et déblaiement. Équipement adapté à tous les types de sol de la région.</p>
+      </article>
+      <article class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="8" rx="1"/><path d="M8 10V6h8v4" stroke-linecap="round"/></svg></div>
+        <h3>Fosses septiques</h3>
+        <p>Installation conforme aux normes du Québec, adaptée aux propriétés rurales et de villégiature.</p>
+      </article>
+      <article class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20c4-10 6-14 9-14s5 4 9 14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="7" r="1.6"/><circle cx="17" cy="9" r="1.6"/></svg></div>
+        <h3>Chemins forestiers</h3>
+        <p>Ouverture et entretien de chemins d'accès pour propriétés forestières et terrains éloignés.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERTISE ============ -->
+<section id="expertise" class="why">
+  <div class="wrap why-grid">
+    <div>
+      <span class="eyebrow">Pourquoi Langlois</span>
+      <h2>Le terrain de la Mauricie n'a pas de secret</h2>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke-linejoin="round"/></svg></div>
+          <div><h3>Connaissance du sol local</h3><p>Roc, argile ou sol sablonneux — chaque secteur de Saint-Mathieu-du-Parc et de la Mauricie a ses particularités. On adapte l'approche en conséquence.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v6" stroke-linecap="round"/></svg></div>
+          <div><h3>Un seul entrepreneur, tous les travaux</h3><p>Excavation, terrassement et pavé uni sous un même contact — moins de coordination, plus d'efficacité sur le chantier.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11Z" stroke-linejoin="round"/></svg></div>
+          <div><h3>Travaux conformes</h3><p>Installations septiques réalisées selon la réglementation québécoise applicable aux résidences isolées.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18" stroke-linecap="round" stroke-linejoin="round"/><path d="m7 14 4-4 3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h3>Accès aux terrains éloignés</h3><p>Chemins forestiers et propriétés de villégiature difficiles d'accès — un terrain qu'on connaît bien.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="why-panel">
+      <span class="mono">Zone d'intervention type</span>
+      <h3>Résidentiel &amp; villégiature</h3>
+      <p>Propriétés en bord de lac, terrains boisés, chemins privés — la majorité de nos chantiers se trouvent hors des zones desservies par les grands réseaux municipaux, ce qui demande une évaluation de terrain différente à chaque fois.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESSUS ============ -->
+<section id="processus">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Déroulement d'un projet</span>
+      <h2>De la visite de terrain à la finition</h2>
+    </div>
+    <div class="timeline">
+      <div class="tsteps">
+        <div class="tstep"><span class="mono">Étape 1</span><h3>Visite de terrain</h3><p>Évaluation du sol, de l'accès et de la portée des travaux directement sur place.</p></div>
+        <div class="tstep"><span class="mono">Étape 2</span><h3>Soumission</h3><p>Un prix clair basé sur ce qu'on a observé — pas de surprise en cours de route.</p></div>
+        <div class="tstep"><span class="mono">Étape 3</span><h3>Exécution</h3><p>Travaux réalisés avec l'équipement adapté au type de sol et à l'ampleur du chantier.</p></div>
+        <div class="tstep"><span class="mono">Étape 4</span><h3>Finition</h3><p>Nettoyage du site et remise en état des surfaces environnantes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZONE ============ -->
+<section id="zone" class="zone">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Zone desservie</span>
+      <h2>Saint-Mathieu-du-Parc et les environs</h2>
+      <p>Basés au 1620, chemin Principal, on dessert Saint-Mathieu-du-Parc et la grande région de la Mauricie, incluant les propriétés de villégiature moins accessibles.</p>
+    </div>
+    <div class="tags">
+      <span>Saint-Mathieu-du-Parc</span><span>Shawinigan</span><span>Trois-Rivières</span>
+      <span>Saint-Boniface</span><span>Maskinongé</span><span>Mauricie</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOUMISSION ============ -->
+<section id="soumission">
+  <div class="wrap quote-grid">
+    <div class="quote-copy">
+      <span class="eyebrow">Soumission gratuite</span>
+      <h2>Un projet en tête?</h2>
+      <p>Décrivez-nous votre terrain et vos besoins — on revient avec une soumission claire, sans engagement.</p>
+      <div class="assur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Visite de terrain incluse</div>
+      <div class="assur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Sans engagement</div>
+      <div class="assur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Prix clair, établi sur place</div>
+    </div>
+
+    <form id="quoteForm" novalidate>
+      <div class="field">
+        <label for="nom">Nom complet</label>
+        <input id="nom" name="nom" type="text" placeholder="Votre nom" required>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="tel">Téléphone</label>
+          <input id="tel" name="tel" type="tel" placeholder="819 000-0000" required>
+        </div>
+        <div class="field">
+          <label for="courriel">Courriel</label>
+          <input id="courriel" name="courriel" type="email" placeholder="vous@courriel.com">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="service">Type de travaux</label>
+          <select id="service" name="service">
+            <option>Pavé uni</option>
+            <option>Terrassement</option>
+            <option>Excavation</option>
+            <option>Fosse septique</option>
+            <option>Chemin forestier</option>
+            <option>Je ne suis pas certain</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="municipalite">Municipalité</label>
+          <input id="municipalite" name="municipalite" type="text" placeholder="Saint-Mathieu-du-Parc…">
+        </div>
+      </div>
+      <div class="field">
+        <label for="message">Détails du projet</label>
+        <textarea id="message" name="message" placeholder="Superficie, accès au terrain, échéancier souhaité…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
+      <p class="form-note">On vous répond généralement en moins de 24 h ouvrables.</p>
+      <div class="confirm" id="confirm">Merci! Votre demande a bien été envoyée. On vous recontacte sous peu.</div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="brand" style="margin-bottom:.9rem">
+          <svg class="mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="3" y="3" width="34" height="34" rx="3" stroke="#FAF6EC" stroke-width="1.6"/>
+            <path d="M8 24h24" stroke="#B85A2E" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 29h24" stroke="#7C9159" stroke-width="2" stroke-linecap="round"/>
+            <path d="M14 24V13l6-5 6 5v11" stroke="#FAF6EC" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+          <span>Les entretiens Langlois</span>
+        </div>
+        <p style="max-width:32ch">Excavation, terrassement, pavé uni, fosses septiques et chemins forestiers à Saint-Mathieu-du-Parc.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Coordonnées</h4>
+        <a href="tel:+18192474042">819 247-4042</a>
+        <p>1620, chemin Principal<br>Saint-Mathieu-du-Parc, QC G0X 1N0</p>
+        <a href="https://www.facebook.com/lesentretienslanglois/" target="_blank" rel="noopener">Page Facebook</a>
+      </div>
+      <div class="foot-col">
+        <h4>Services</h4>
+        <a href="#services">Pavé uni</a>
+        <a href="#services">Terrassement</a>
+        <a href="#services">Excavation</a>
+        <a href="#services">Fosses septiques</a>
+        <a href="#services">Chemins forestiers</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Les entretiens Langlois inc. · Saint-Mathieu-du-Parc, QC</span>
+      <span class="credit">Conçu et géré par <b>Gestion Pilier</b></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('quoteForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var nom = document.getElementById('nom');
+    var tel = document.getElementById('tel');
+    if(!nom.value.trim() || !tel.value.trim()){
+      (nom.value.trim() ? tel : nom).focus();
+      return;
+    }
+    document.getElementById('confirm').style.display = 'block';
+    this.querySelector('button').textContent = 'Demande envoyée ✓';
+    this.querySelector('button').disabled = true;
+  });
+</script>
+</body>
+</html>

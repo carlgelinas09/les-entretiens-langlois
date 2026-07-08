@@ -76,16 +76,16 @@
   :focus-visible{outline:3px solid var(--hivis);outline-offset:3px}
 
   /* ---------- Hero ---------- */
-  .hero{position:relative;padding:clamp(3rem,6vw,5.5rem) 0 clamp(3.2rem,5vw,4.8rem);overflow:hidden}
-  .hero-contours{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none}
-  .hero-contours svg{width:100%;height:100%}
-  .hero-contours path{fill:none;stroke:var(--hivis-dim);stroke-width:1;opacity:.4}
-  .hero-contours .active{stroke:var(--hivis);opacity:.85;stroke-width:1.4;filter:drop-shadow(0 0 6px rgba(87,218,30,.5));animation:contourPulse 5s ease-in-out infinite}
-  @keyframes contourPulse{0%,100%{opacity:.4}50%{opacity:.9}}
-  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(2rem,4vw,4rem);align-items:center}
-  .hero h1{font-size:clamp(2.5rem,5.2vw,4.2rem);font-weight:700;margin:1.1rem 0 1.3rem}
-  .hero h1 em{font-style:normal;color:var(--hivis);text-shadow:0 0 24px rgba(87,218,30,.35)}
-  .hero p.lead{font-size:clamp(1.02rem,1.4vw,1.18rem);color:var(--muted);max-width:38ch;margin-bottom:1.9rem}
+  .hero{position:relative;min-height:clamp(560px,82vh,780px);display:flex;align-items:center;padding:clamp(3rem,6vw,4.5rem) 0;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:url("img/excavation-mur-soutenement.jpg") center 40%/cover no-repeat;transform:scale(1.04);animation:heroZoom 18s ease-out forwards}
+  @keyframes heroZoom{to{transform:scale(1)}}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(90deg,rgba(8,10,5,.94) 0%,rgba(8,10,5,.8) 38%,rgba(8,10,5,.42) 70%,rgba(8,10,5,.55) 100%),
+    linear-gradient(to bottom,rgba(8,10,5,.5) 0%,transparent 30%,transparent 68%,var(--void) 100%)}
+  .hero-inner{position:relative;z-index:1;max-width:660px}
+  .hero h1{font-size:clamp(2.6rem,5.6vw,4.4rem);font-weight:700;margin:1.1rem 0 1.3rem;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+  .hero h1 em{font-style:normal;color:var(--hivis);text-shadow:0 0 28px rgba(87,218,30,.5)}
+  .hero p.lead{font-size:clamp(1.02rem,1.4vw,1.18rem);color:#D7D9CB;max-width:40ch;margin-bottom:1.9rem;text-shadow:0 1px 12px rgba(0,0,0,.5)}
   .hero-cta{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.2rem}
   .trust{display:flex;gap:1.4rem;flex-wrap:wrap;font-size:.85rem;font-weight:600;color:var(--bone)}
   .trust span{display:inline-flex;align-items:center;gap:.45rem}
@@ -232,8 +232,7 @@
   /* Responsive */
   @media(max-width:960px){
     .nav-links{display:none}
-    .hero-grid{grid-template-columns:1fr}
-    .gauge{max-width:420px;margin-inline:auto;order:-1}
+    .hero{min-height:clamp(480px,74vh,620px)}
     .cards{grid-template-columns:repeat(3,1fr)}
     .media-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:150px}
     .why-grid{grid-template-columns:1fr}
@@ -255,6 +254,7 @@
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
     .reveal{opacity:1!important;transform:none!important}
+    .hero-bg{transform:none!important}
   }
 </style>
 </head>
@@ -284,20 +284,9 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero">
-  <div class="hero-contours" aria-hidden="true">
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
-      <path d="M-50 480 C 200 420 380 520 620 460 C 860 400 1050 500 1260 440" />
-      <path d="M-50 430 C 200 370 380 470 620 410 C 860 350 1050 450 1260 390" />
-      <path class="active" d="M-50 380 C 200 320 380 420 620 360 C 860 300 1050 400 1260 340" />
-      <path d="M-50 330 C 200 270 380 370 620 310 C 860 250 1050 350 1260 290" />
-      <path d="M-50 280 C 200 220 380 320 620 260 C 860 200 1050 300 1260 240" />
-      <path d="M-50 230 C 200 170 380 270 620 210 C 860 150 1050 250 1260 190" />
-      <path d="M-50 180 C 200 120 380 220 620 160 C 860 100 1050 200 1260 140" />
-      <path d="M-50 130 C 200 70 380 170 620 110 C 860 50 1050 150 1260 90" />
-    </svg>
-  </div>
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-inner">
       <span class="eyebrow">Saint-Mathieu-du-Parc · Mauricie</span>
       <h1>On lit votre terrain,<br>jusqu'<em>au roc</em>.</h1>
       <p class="lead">Excavation, terrassement, pavé uni, fosses septiques et chemins forestiers. Un travail de précision qui commence sous la surface.</p>
@@ -309,48 +298,6 @@
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Équipement lourd sur place</span>
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Résidentiel &amp; villégiature</span>
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Travaux conformes</span>
-      </div>
-    </div>
-
-    <div class="gauge" aria-hidden="true">
-      <div class="gauge-head">
-        <span class="mono">Coupe de terrain — secteur 01</span>
-        <span class="live">Niveau</span>
-      </div>
-      <svg class="gauge-svg" viewBox="0 0 340 200" preserveAspectRatio="none">
-        <defs>
-          <pattern id="soilTex" width="12" height="12" patternUnits="userSpaceOnUse">
-            <rect width="12" height="12" fill="#171A0E"/>
-            <circle cx="3" cy="4" r="1" fill="#22280F"/>
-            <circle cx="9" cy="9" r="0.8" fill="#20250E"/>
-          </pattern>
-        </defs>
-        <rect x="0" y="0" width="340" height="200" fill="#0A0C06"/>
-        <!-- couches de sol -->
-        <rect x="0" y="46" width="340" height="154" fill="url(#soilTex)"/>
-        <rect x="0" y="120" width="340" height="80" fill="#101207"/>
-        <!-- excavation -->
-        <path d="M70 46 L110 130 L230 130 L270 46 Z" fill="#0A0C06" stroke="#353B22" stroke-width="1"/>
-        <!-- ticks de profondeur -->
-        <g font-family="IBM Plex Mono" font-size="8" fill="#9DA087">
-          <line x1="0" y1="46" x2="8" y2="46" stroke="#4a512d" stroke-width="1"/>
-          <text x="12" y="49">0.0</text>
-          <line x1="0" y1="88" x2="8" y2="88" stroke="#4a512d" stroke-width="1"/>
-          <text x="12" y="91">-1.2</text>
-          <line x1="0" y1="130" x2="8" y2="130" stroke="#4a512d" stroke-width="1"/>
-          <text x="12" y="133">-2.4</text>
-        </g>
-        <!-- ligne de balayage -->
-        <line class="depth-scan" x1="60" y1="46" x2="280" y2="46" />
-        <!-- ligne de niveau visée -->
-        <line class="grade-line" x1="60" y1="130" x2="280" y2="130" />
-        <!-- godet -->
-        <path d="M150 8 L190 8 L198 30 L184 44 L156 44 L142 30 Z" fill="#0A0C06" stroke="#57DA1E" stroke-width="1.4" stroke-linejoin="round"/>
-        <path d="M156 44 l4 8 M168 44 l4 9 M180 44 l4 8" stroke="#57DA1E" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <div class="gauge-foot">
-        <div><span class="label">Profondeur visée</span><br><span class="val">−2,4 m</span></div>
-        <div class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Niveau atteint</div>
       </div>
     </div>
   </div>

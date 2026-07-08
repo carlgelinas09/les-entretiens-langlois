@@ -141,6 +141,44 @@
   }
   .video-caption{pointer-events:auto;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none}
   .video-caption:hover{text-decoration:underline}
+  .media-trigger{
+    all:unset;display:block;width:100%;height:100%;cursor:zoom-in;
+  }
+  .media-trigger img{cursor:zoom-in}
+
+  /* Visualiseur photo (lightbox) */
+  .lightbox{
+    position:fixed;inset:0;z-index:200;background:rgba(22,15,9,.94);
+    display:flex;align-items:center;justify-content:center;padding:clamp(1rem,4vw,3rem);
+    opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s;
+  }
+  .lightbox.is-open{opacity:1;visibility:visible;transition:opacity .25s ease}
+  .lightbox-figure{position:relative;max-width:min(92vw,1100px);max-height:88vh;display:flex;flex-direction:column;align-items:center}
+  .lightbox-img{max-width:100%;max-height:78vh;border-radius:6px;box-shadow:0 30px 70px -20px rgba(0,0,0,.6);
+    opacity:0;transform:scale(.97);transition:opacity .25s ease,transform .25s ease;}
+  .lightbox.is-open .lightbox-img{opacity:1;transform:scale(1)}
+  .lightbox-cap{margin-top:1rem;color:#F1E9D8;font-family:'IBM Plex Mono';font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;text-align:center}
+  .lightbox-close,.lightbox-nav{
+    position:absolute;background:rgba(250,246,236,.12);border:1px solid rgba(250,246,236,.25);color:#FAF6EC;
+    border-radius:50%;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;
+    transition:background .18s ease,transform .18s ease;
+  }
+  .lightbox-close:hover,.lightbox-nav:hover{background:rgba(250,246,236,.22)}
+  .lightbox-close{top:-14px;right:-14px}
+  .lightbox-nav{top:50%;transform:translateY(-50%)}
+  .lightbox-nav.prev{left:clamp(-8px,-4vw,-56px)}
+  .lightbox-nav.next{right:clamp(-8px,-4vw,-56px)}
+  .lightbox-nav:hover{transform:translateY(-50%) scale(1.06)}
+  .lightbox-counter{margin-top:.5rem;color:#9C8F73;font-family:'IBM Plex Mono';font-size:.68rem;letter-spacing:.1em}
+  @media(max-width:640px){
+    .lightbox-nav{width:38px;height:38px}
+    .lightbox-nav.prev{left:.25rem}
+    .lightbox-nav.next{right:.25rem}
+    .lightbox-close{top:.25rem;right:.25rem}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .lightbox,.lightbox-img{transition:none!important}
+  }
 
   /* ---------- Sections ---------- */
   section{padding:clamp(3.4rem,6vw,5.8rem) 0}
@@ -377,31 +415,45 @@
         </a>
       </div>
       <figure class="media-item wide">
-        <img src="img/excavation-mur-soutenement.jpg" alt="Excavation et construction d'un mur de soutènement en forêt" loading="lazy">
+        <button class="media-trigger" type="button" data-src="img/excavation-mur-soutenement.jpg" data-caption="Excavation &amp; mur de soutènement" aria-label="Agrandir : Excavation et mur de soutènement">
+          <img src="img/excavation-mur-soutenement.jpg" alt="Excavation et construction d'un mur de soutènement en forêt" loading="lazy">
+        </button>
         <figcaption class="media-caption">Excavation &amp; mur de soutènement</figcaption>
       </figure>
       <figure class="media-item tall">
-        <img src="img/escalier-pave-uni.jpg" alt="Escalier et patio en pavé uni menant à une résidence" loading="lazy">
+        <button class="media-trigger" type="button" data-src="img/escalier-pave-uni.jpg" data-caption="Escalier en pavé uni" aria-label="Agrandir : Escalier en pavé uni">
+          <img src="img/escalier-pave-uni.jpg" alt="Escalier et patio en pavé uni menant à une résidence" loading="lazy">
+        </button>
         <figcaption class="media-caption">Escalier en pavé uni</figcaption>
       </figure>
       <figure class="media-item">
-        <img src="img/pave-uni-commercial.jpg" alt="Aire de feu en pavé uni pour un espace commercial" loading="lazy">
+        <button class="media-trigger" type="button" data-src="img/pave-uni-commercial.jpg" data-caption="Pavé uni — aire de feu" aria-label="Agrandir : Pavé uni, aire de feu">
+          <img src="img/pave-uni-commercial.jpg" alt="Aire de feu en pavé uni pour un espace commercial" loading="lazy">
+        </button>
         <figcaption class="media-caption">Pavé uni — aire de feu</figcaption>
       </figure>
       <figure class="media-item">
-        <img src="img/amenagement-piscine.jpg" alt="Excavation et dalles autour d'une piscine en construction" loading="lazy">
+        <button class="media-trigger" type="button" data-src="img/amenagement-piscine.jpg" data-caption="Aménagement piscine" aria-label="Agrandir : Aménagement piscine">
+          <img src="img/amenagement-piscine.jpg" alt="Excavation et dalles autour d'une piscine en construction" loading="lazy">
+        </button>
         <figcaption class="media-caption">Aménagement piscine</figcaption>
       </figure>
       <figure class="media-item tall">
-        <img src="img/terrassement-fondation.jpg" alt="Terrassement autour d'une fondation résidentielle" loading="lazy">
+        <button class="media-trigger" type="button" data-src="img/terrassement-fondation.jpg" data-caption="Terrassement résidentiel" aria-label="Agrandir : Terrassement résidentiel">
+          <img src="img/terrassement-fondation.jpg" alt="Terrassement autour d'une fondation résidentielle" loading="lazy">
+        </button>
         <figcaption class="media-caption">Terrassement résidentiel</figcaption>
       </figure>
       <figure class="media-item">
-        <img src="img/terrassement-pave-riverain.jpg" alt="Terrassement et pavé uni pour une propriété riveraine" loading="lazy">
+        <button class="media-trigger" type="button" data-src="img/terrassement-pave-riverain.jpg" data-caption="Terrassement &amp; pavé uni" aria-label="Agrandir : Terrassement et pavé uni">
+          <img src="img/terrassement-pave-riverain.jpg" alt="Terrassement et pavé uni pour une propriété riveraine" loading="lazy">
+        </button>
         <figcaption class="media-caption">Terrassement &amp; pavé uni</figcaption>
       </figure>
       <figure class="media-item">
-        <img src="img/enrochement-residence.jpg" alt="Enrochement et terrassement devant une résidence en construction" loading="lazy">
+        <button class="media-trigger" type="button" data-src="img/enrochement-residence.jpg" data-caption="Enrochement" aria-label="Agrandir : Enrochement">
+          <img src="img/enrochement-residence.jpg" alt="Enrochement et terrassement devant une résidence en construction" loading="lazy">
+        </button>
         <figcaption class="media-caption">Enrochement</figcaption>
       </figure>
     </div>
@@ -605,6 +657,24 @@
   </div>
 </footer>
 
+<!-- ============ VISUALISEUR PHOTO ============ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualiseur de photo" aria-hidden="true">
+  <div class="lightbox-figure">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Fermer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+    </button>
+    <button class="lightbox-nav prev" id="lightboxPrev" type="button" aria-label="Photo précédente">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Photo suivante">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <p class="lightbox-cap" id="lightboxCap"></p>
+    <p class="lightbox-counter" id="lightboxCounter"></p>
+  </div>
+</div>
+
 <script>
   document.getElementById('quoteForm').addEventListener('submit', function(e){
     e.preventDefault();
@@ -618,6 +688,64 @@
     this.querySelector('button').textContent = 'Demande envoyée ✓';
     this.querySelector('button').disabled = true;
   });
+
+  // Visualiseur photo
+  (function(){
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('.media-trigger'));
+    var lightbox = document.getElementById('lightbox');
+    var imgEl = document.getElementById('lightboxImg');
+    var capEl = document.getElementById('lightboxCap');
+    var counterEl = document.getElementById('lightboxCounter');
+    var closeBtn = document.getElementById('lightboxClose');
+    var prevBtn = document.getElementById('lightboxPrev');
+    var nextBtn = document.getElementById('lightboxNext');
+    var currentIndex = 0;
+    var lastFocused = null;
+
+    function show(index){
+      currentIndex = (index + triggers.length) % triggers.length;
+      var t = triggers[currentIndex];
+      imgEl.src = t.getAttribute('data-src');
+      imgEl.alt = t.getAttribute('data-caption') || '';
+      capEl.textContent = t.getAttribute('data-caption') || '';
+      counterEl.textContent = (currentIndex + 1) + ' / ' + triggers.length;
+    }
+
+    function open(index){
+      lastFocused = document.activeElement;
+      show(index);
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function close(){
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocused) lastFocused.focus();
+    }
+
+    triggers.forEach(function(t, i){
+      t.addEventListener('click', function(){ open(i); });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', function(){ show(currentIndex - 1); });
+    nextBtn.addEventListener('click', function(){ show(currentIndex + 1); });
+
+    lightbox.addEventListener('click', function(e){
+      if (e.target === lightbox) close();
+    });
+
+    document.addEventListener('keydown', function(e){
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(currentIndex - 1);
+      if (e.key === 'ArrowRight') show(currentIndex + 1);
+    });
+  })();
 </script>
 </body>
 </html>
